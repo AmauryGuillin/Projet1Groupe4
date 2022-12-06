@@ -1,7 +1,5 @@
 package fr.isika.cda22.projet1_Groupe4;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
 
 public class Stagiaire implements Constantes {
 
@@ -11,8 +9,6 @@ public class Stagiaire implements Constantes {
 	String departement;
 	String nomPromo = "";
 	String dateFormation;
-
-	private static int cptNumStagiaire = 0;
 
 	// Constructeur
 	public Stagiaire(String nom, String prenom, String departement, String nomPromo, String dateFormation) {
@@ -65,6 +61,8 @@ public class Stagiaire implements Constantes {
 		this.dateFormation = dateFormation;
 	}
 
+	// Cette methode permet d'afficher un stagiaire précis avec une certaine mise en
+	// page
 	@Override
 	public String toString() {
 		return "[nom : " + this.getNom().trim() + ", prenom : " + this.getPrenom().trim() + ", departement : "
@@ -72,6 +70,8 @@ public class Stagiaire implements Constantes {
 				+ this.getDateFormation().trim() + "] | ";
 	}
 
+	// Cette methode permet de comparer deux stagiaires entre-eux. D'une part part
+	// leurs noms, d'autre part via leurs prenoms s'ils les noms sont égaux
 	public int compareTo(Stagiaire myStagiaire) {
 		if (myStagiaire.getNom().compareTo(this.getNom()) == 0) {
 			return myStagiaire.getPrenom().compareTo(this.getPrenom());
@@ -80,6 +80,8 @@ public class Stagiaire implements Constantes {
 		}
 	}
 
+	// Cette methode permet de formater le nom pour qu'il soit d'une taille 22
+	// caractères
 	public String getNomLong() {
 		String nomLong = this.getNom();
 
@@ -89,6 +91,8 @@ public class Stagiaire implements Constantes {
 		return nomLong;
 	}
 
+	// Cette methode permet de formater le nom pour qu'il soit d'une taille 20
+	// caractères
 	public String getPrenomLong() {
 		String prenomLong = this.getPrenom();
 
@@ -98,6 +102,8 @@ public class Stagiaire implements Constantes {
 		return prenomLong;
 	}
 
+	// Cette methode permet de formater le nom pour qu'il soit d'une taille 2
+	// caractères
 	public String getDepartementLong() {
 		String depLong = this.getDepartement();
 
@@ -107,6 +113,8 @@ public class Stagiaire implements Constantes {
 		return depLong;
 	}
 
+	// Cette methode permet de formater le nom pour qu'il soit d'une taille 15
+	// caractères
 	public String getNomPromoLong() {
 		String nomPromoLong = getNomPromo();
 
@@ -116,6 +124,8 @@ public class Stagiaire implements Constantes {
 		return nomPromoLong;
 	}
 
+	// Cette methode permet de formater le nom pour qu'il soit d'une taille 4
+	// caractères
 	public String getDateFormationLong() {
 		String dateFormationLong = getDateFormation();
 
@@ -123,40 +133,6 @@ public class Stagiaire implements Constantes {
 			dateFormationLong += " ";
 		}
 		return dateFormationLong;
-	}
-
-	public void sauvegarderFichierBinaireStagiaire() {
-
-		try {
-			// on accède au fichier binaire et on ouvre le flux "raf"
-			RandomAccessFile raf = new RandomAccessFile(CHEMIN_BIN, "rw");
-
-			// le lecteur de fichier binaire se place à la position "cptNumStagiaire *
-			// TAILLE_STAGIAIRE_OCTET"
-			// car .seek() se base sur l'octet et non sur le caractère (1 letter = 2 octets
-			// / 1 int = 4 octets)
-			raf.seek(cptNumStagiaire * TAILLE_STAGIAIRE_OCTET);
-
-			// puis on ecrit dans le fichier binaire les attributs du stagiaire (avec si
-			// besoin un formatage de la longueur de l'attribut)
-			String nomLong = this.getNomLong();
-			String prenomLong = this.getPrenomLong();
-			raf.writeChars(nomLong);
-			raf.writeChars(prenomLong);
-			raf.writeChars(this.getDepartementLong());
-			raf.writeChars(this.getNomPromoLong());
-			raf.writeChars(this.getDateFormationLong());
-
-			// puis on incrémente le compteur stagiaires cptNumStagiaire
-			cptNumStagiaire++;
-
-			// On ferme le flux "raf"
-			raf.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

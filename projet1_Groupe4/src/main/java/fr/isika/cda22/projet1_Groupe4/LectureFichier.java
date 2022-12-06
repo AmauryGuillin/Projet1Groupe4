@@ -5,21 +5,29 @@ import java.io.RandomAccessFile;
 
 public class LectureFichier implements Constantes {
 
-	// Méthode pour afficher dans la console le contenu du fichier binaire
+	/* Méthode pour afficher dans la console le contenu du fichier binaire
+	 
+	 * On positionne la tête de lecture en position "i * TAILLE_NOEUD_OCTET"
+	 * car raf.seek() se base sur l'octet et non sur le caractère 
+	 * (1 letter = 2 octets / 1 int = 4 octets)
+	 * (0*138 = 0 --> On tombe bien sur le premier stagiaire
+	 * 1*138 = 138 --> On tombe bien sur le deuxieme stagiaire...)
+	 * 
+	 * On commence à parcourir/lire le fichier binaire selon ce principe :
+	 * Dans le premier cas 0*138 = 0 octets raf.seek(0) :
+	 * 1) de 0 à TAILLE_MAX_NOM, on sait qu'il s'agit des lettres du "nom" du stagiaire
+	 * 2) de 0 à TAILLE_MAX_PRENOM, on sait qu'il s'agit des lettres du "prenom"
+	 * 3) de 0 à TAILLE_MAX_DEPARTEMENT, on sait qu'il s'agit des numeros du "département" du stagiaire
+	 * 4) de 0 à TAILLE_MAX_FORMATION, on sait qu'il s'agit des lettres de la "formation" du stagiaire
+	 * 5) de 0 à TAILLE_MAX_ANNEEFORMATION, on sait qu'il s'agit des lettres de l'"annee de formation" du stagiaire
+	 */
+	
 	public void lireFichierBinaireEnConsole(String chemin_Bin) {
 		try {
 			RandomAccessFile raf = new RandomAccessFile(chemin_Bin, "rw");
 			int nbrStagiaires = (int) (raf.length() / TAILLE_NOEUD_OCTET);
-			// on ouvre le flux "raf" associé au fichier binaire
-
-			// int nbrStagiaires = 100; // A DEFINIR PAR UNE FONCTION
-			// annuaire.getNombreStagiaires() qui calcule le nombre de noeuds dans
-			// l'annuaire;
 			for (int i = 0; i < nbrStagiaires; i++) {
-				// on positionne la tête de lecture en position "i * TAILLE_STAGIAIRE_OCTET"
-				// car .seek() se base sur l'octet et non sur le caractère (1 letter = 2 octets
-				// / 1 int = 4 octets)
-				// contrairement à .readChar() qui lui se déplace de caractère en caractère
+
 				raf.seek(i * TAILLE_NOEUD_OCTET);
 
 				// on crée les variables qui vont stocker les valeurs des attributs
@@ -32,30 +40,24 @@ public class LectureFichier implements Constantes {
 				int indexFilsDroit = 0;
 				int indexDoublon = 0;
 
-				// DEBUT DE LA LECTURE DU "raf"
-				// On commence à parcourir/lire le fichier binaire selon ce principe :
-				// 1--> de 0 à TAILLE_MAX_NOM, on sait qu'il s'agit des lettres du "nom" du
-				// stagiaire
+				// DEBUT DE LA LECTURE
+				//1)
 				for (int k = 0; k < TAILLE_MAX_NOM; k++) {
 					nomRecup += raf.readChar();
 				}
-				// 1--> de 0 à TAILLE_MAX_PRENOM, on sait qu'il s'agit des lettres du "prenom"
-				// du stagiaire
+				//2)
 				for (int k = 0; k < TAILLE_MAX_PRENOM; k++) {
 					prenomRecup += raf.readChar();
 				}
-				// 1--> de 0 à TAILLE_MAX_DEPARTEMENT, on sait qu'il s'agit des numeros du
-				// "département" du stagiaire
+				//3)
 				for (int k = 0; k < TAILLE_MAX_DEPARTEMENT; k++) {
 					departementRecup += raf.readChar();
 				}
-				// 1--> de 0 à TAILLE_MAX_FORMATION, on sait qu'il s'agit des lettres de la
-				// "formation" du stagiaire
+				//4)
 				for (int k = 0; k < TAILLE_MAX_NOM_PROMO; k++) {
 					formationRecup += raf.readChar();
 				}
-				// 1--> de 0 à TAILLE_MAX_ANNEEFORMATION, on sait qu'il s'agit des lettres de l'
-				// "annee de formation" du stagiaire
+				//5)
 				for (int k = 0; k < TAILLE_MAX_DATE_FORMATION; k++) {
 					anneeFormationRecup += raf.readChar();
 				}
@@ -76,7 +78,7 @@ public class LectureFichier implements Constantes {
 				System.out.println("doublon = " + indexDoublon);
 			}
 
-			// on ferme le flux "raf"
+			// fermeture du flux
 			raf.close();
 
 		} catch (IOException e) {

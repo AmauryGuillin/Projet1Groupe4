@@ -19,12 +19,12 @@ public interface Constantes {
 
 	// Concernant la place TOTALE qu'ocupe un Stagiaire
 	public final static int TAILLE_STAGIAIRE_OCTET = (TAILLE_MAX_NOM * 2) + (TAILLE_MAX_PRENOM * 2)
-			+ (TAILLE_MAX_DEPARTEMENT * 2) + (TAILLE_MAX_NOM_PROMO * 2) + (TAILLE_MAX_DATE_FORMATION * 2); // = 126
-																											// octets
+			+ (TAILLE_MAX_DEPARTEMENT * 2) + (TAILLE_MAX_NOM_PROMO * 2) + (TAILLE_MAX_DATE_FORMATION * 2); // = 126 octets
+																											 
 
 	// Concernant la place TOTALE qu'ocupe un Noeud dans le fichier binaire
 	// (Stagiaire + fils gauche + fils droit + doublon)
-	public final static int TAILLE_NOEUD_OCTET = TAILLE_STAGIAIRE_OCTET + 4 + 4 + 4; // = 136 octets
+	public final static int TAILLE_NOEUD_OCTET = TAILLE_STAGIAIRE_OCTET + 4 + 4 + 4; // = 138 octets
 
 	// Concernant la position des indexes des fils gauche/droit + doublon
 	public final static int INDEX_FILS_GAUCHE_OCTET = TAILLE_STAGIAIRE_OCTET; // 124 octets
