@@ -25,7 +25,7 @@ public class VueInscription extends Scene implements EffacerActions {
 	private PasswordField password;
 
 	public VueInscription() {
-		super(new GridPane(), 1125, 620);
+		super(new GridPane(), 1280, 720);
 
 		GridPane root = (GridPane) this.getRoot();// organise les composants de la fenetre
 		root.setPadding(new Insets(20)); //

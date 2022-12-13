@@ -30,7 +30,7 @@ public class VueConnexion extends Scene implements EffacerActions {
 	
 // ---------------------------------------LES ESSENTIELS---------------------------------------
 	public VueConnexion() {
-		super(new GridPane(), 1125, 620);
+		super(new GridPane(), 1280, 720);
 		
 		GridPane root = (GridPane) this.getRoot();// organise les composants de la fenetre
 		

@@ -102,6 +102,10 @@ public class Stagiaire implements Constantes {
 		return dateFormationLong;
 	}
 	
+	public String getAll() {
+		return nom+" "+prenom+" "+departement+" "+nomPromo+" "+dateFormation;
+	}
+	
 	// Getters & Setters
 	public String getNom() {
 		return nom;
