@@ -19,55 +19,22 @@ public class Stagiaire implements Constantes {
 		this.nomPromo = nomPromo;
 		this.dateFormation = dateFormation;
 	}
-
-	// Getters & Setters
-	public String getNom() {
-		return nom;
+	
+	public Stagiaire() {
+		
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public String getDepartement() {
-		return departement;
-	}
-
-	public void setDepartement(String departement) {
-		this.departement = departement;
-	}
-
-	public String getNomPromo() {
-		return nomPromo;
-	}
-
-	public void setNomPromo(String nomPromo) {
-		this.nomPromo = nomPromo;
-	}
-
-	public String getDateFormation() {
-		return dateFormation;
-	}
-
-	public void setDateFormation(String dateFormation) {
-		this.dateFormation = dateFormation;
-	}
 
 	// Cette methode permet d'afficher un stagiaire précis avec une certaine mise en
 	// page
 	@Override
 	public String toString() {
-		return "[nom : " + this.getNom().trim() + ", prenom : " + this.getPrenom().trim() + ", departement : "
+		
+//		return "(nom : " + this.getNom().trim() + " prenom : " + this.getPrenom().trim() + ")";
+		
+		return "\nnom : " + this.getNom().trim() + ", prenom : " + this.getPrenom().trim() + ", departement : "
 				+ this.getDepartement().trim() + ", nomPromo : " + this.getNomPromo().trim() + ", dateFormation : "
-				+ this.getDateFormation().trim() + "] | ";
+				+ this.getDateFormation().trim() + " |\n";
 	}
 
 	// Cette methode permet de comparer deux stagiaires entre-eux. D'une part part
@@ -133,6 +100,47 @@ public class Stagiaire implements Constantes {
 			dateFormationLong += " ";
 		}
 		return dateFormationLong;
+	}
+	
+	// Getters & Setters
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getDepartement() {
+		return departement;
+	}
+
+	public void setDepartement(String departement) {
+		this.departement = departement;
+	}
+
+	public String getNomPromo() {
+		return nomPromo;
+	}
+
+	public void setNomPromo(String nomPromo) {
+		this.nomPromo = nomPromo;
+	}
+
+	public String getDateFormation() {
+		return dateFormation;
+	}
+
+	public void setDateFormation(String dateFormation) {
+		this.dateFormation = dateFormation;
 	}
 
 }

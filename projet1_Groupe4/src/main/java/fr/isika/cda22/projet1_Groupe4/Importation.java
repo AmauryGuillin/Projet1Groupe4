@@ -4,8 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Importation implements Constantes {
+	
+	
 
 	/*
 	 * Cette methode permet de lire le fichier .txt et de le retranscrire dans un
@@ -25,12 +31,12 @@ public class Importation implements Constantes {
 			FileReader fr = new FileReader(chemin_du_txt);
 			BufferedReader br = new BufferedReader(fr);
 			RandomAccessFile raf = new RandomAccessFile(chemin_du_bin, "rw");
-
+			raf.setLength(0);
+			int compteur = 0;
 			while (br.ready()) {
-
+				
 				String nom = br.readLine();
 				nom = verifierNoms(nom);
-				System.out.println(nom);
 				String prenom = br.readLine();
 				prenom = verifierPrenoms(prenom);
 				String departement = br.readLine();
@@ -43,10 +49,22 @@ public class Importation implements Constantes {
 
 				Stagiaire stagiaire = new Stagiaire(nom, prenom, departement, nomPromo, dateFormation);
 
-				Noeud noeud = new Noeud(stagiaire, -1, -1, -1);
-				noeud.ajouterStagiaireBinaire(noeud, raf);
-
+				Noeud noeud = new Noeud(0, stagiaire, -1, -1, -1);
+				noeud.ajouterStagiaireBinaire(noeud, compteur, raf);
+				
+				compteur++;
 			}
+			
+			
+			//Methode ajouter
+			
+//			Stagiaire stagiaire = new Stagiaire("ZZZZ", "ZZZZZ", "91", "CDA 22", "2015"); 
+//			
+//			Noeud noeudTest = new Noeud(stagiaire, -1, -1, -1);  //Methode ajouter
+//			noeudTest.ajouterStagiaireBinaire(noeudTest, raf);  //Methode ajouter
+//			tableau = noeudTest.toArray(raf);
+			
+			
 
 			// Fermeture des flux
 			br.close();
@@ -57,21 +75,49 @@ public class Importation implements Constantes {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 
 	// Cette methode permet de formater le nom en MAJUSCULE et d'enlever de
 	// potentiels espaces en fin de ligne
 	public String verifierNoms(String nom) {
 		String nom_conforme = nom;
+		
+		if (nom_conforme.isBlank() || nom_conforme.isEmpty()) {
+			nom_conforme = "NOM";
+		}
 		nom_conforme = nom_conforme.toUpperCase();
 		nom_conforme = nom_conforme.strip();
+	
 		return nom_conforme;
 
 	}
+	
+	public String randomString(String nom) {
+		String nom_random = nom;
+		nom_random = "";
+		Random random = new Random();
+		char c;
+		for (int i = 0; i < 20; i++) {
+			c = (char)(random.nextInt(26) + 97);
+			nom_random += c;
+		}
+		
+		return nom_random;
+		
+	}
+	
 
 	// Cette methode permet de formater le nom avec seulement la première lettre en
 	// MAJUSCULE et d'enlever de potentiels espaces en fin de ligne
 	private String verifierPrenoms(String prenom) {
 		String prenom_conforme = prenom;
+		
+		if (prenom_conforme.isBlank() || prenom_conforme.isEmpty()) {
+			prenom_conforme = "prenom";
+		}
 		prenom_conforme = prenom_conforme.substring(0, 1).toUpperCase() + prenom_conforme.substring(1);
 		prenom_conforme = prenom_conforme.strip();
 		return prenom_conforme;
@@ -80,6 +126,9 @@ public class Importation implements Constantes {
 	// Cette methode permet d'enlever de potentiels espaces en fin de ligne
 	private String verifierDepartement(String departement) {
 		String departement_conforme = departement;
+		if (departement_conforme.isBlank() || departement_conforme.isEmpty()) {
+			departement_conforme = "01";
+		}
 		departement_conforme = departement_conforme.strip();
 		return departement_conforme;
 
@@ -89,6 +138,9 @@ public class Importation implements Constantes {
 	// espaces en fin de ligne
 	private String verifierNomPromo(String nomPromo) {
 		String nom_promo_conforme = nomPromo;
+		if (nom_promo_conforme.isBlank() || nom_promo_conforme.isEmpty()) {
+			nom_promo_conforme = "PROMO";
+		}
 		nom_promo_conforme = nom_promo_conforme.toUpperCase();
 		nom_promo_conforme = nom_promo_conforme.strip();
 		return nom_promo_conforme;
@@ -97,8 +149,12 @@ public class Importation implements Constantes {
 	// Cette methode permet d'enlever de potentiels espaces en fin de ligne
 	private String vérifierDateFormation(String annee) {
 		String date_formation_conforme = annee;
+		if (date_formation_conforme.isBlank() || date_formation_conforme.isEmpty()) {
+			date_formation_conforme = "0000";
+		}
 		date_formation_conforme = date_formation_conforme.strip();
 		return date_formation_conforme;
 	}
+	
 
 }
