@@ -17,41 +17,50 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
-public class VueStagiaireAjouterAdmin extends Scene {
+public class VueStagiaireAjouterAdmin extends Scene implements EffacerActions {
 	
+	//Attributs
 	private MenuItem item1;
 //	private MenuItem item2;
 	private MenuItem item3;
 	private MenuItem item4;
 	private MenuItem item5;
+	private Button btnValider;
 	
+	private TextField textFieldNom;
+	private TextField textFieldPrenom;
+	private TextField textFieldDepartement;
+	private TextField textFieldPromo;
+	private TextField textFieldAnneePromo;
+	
+	
+	
+	//Constructeur
 	public VueStagiaireAjouterAdmin() {
-		
 		super(new VBox(), 1280, 720);
-		
 		VBox grille = (VBox)this.getRoot();
 //		grille.setAlignment(Pos.CENTER);
 	
+		// BackGround image, hébergée sur un serveur distant
+		grille.setStyle("-fx-background-image: url('https://i.goopics.net/whix8k.jpg');"
+				+ "-fx-background-repeat: stretch;" + "-fx-background-size: 1280 720;" +
+		        "-fx-background-position: center center;" );
 		
 		
-        Menu menu = new Menu("Portail de navigation");
-		
-		
-	      
-		
-		 item1 = new MenuItem("Accueil");
-//		 item2 = new MenuItem("Recherche Avancée");
-		 item3 = new MenuItem("Ajouter un stagiaire");
-		 item4 = new MenuItem("Modifier un stagiaire");
-		 item5 = new MenuItem("Deconnexion");
-	
+		//Construction du menu
+		Menu menu = new Menu("Menu");
+		item1 = new MenuItem("Accueil");
+//		item2 = new MenuItem("Recherche Avancée");
+//		item3 = new MenuItem("Ajouter un stagiaire");
+//		item4 = new MenuItem("Modifier un stagiaire");
+		item5 = new MenuItem("Deconnexion");
+
 		menu.getItems().add(item1);
 //		menu.getItems().add(item2);
-		menu.getItems().add(item3);
-		menu.getItems().add(item4);
+//		menu.getItems().add(item3);
+//		menu.getItems().add(item4);
 		menu.getItems().add(item5);
-		
-		
+
 		MenuBar mb = new MenuBar();
 		
 		mb.getMenus().add(menu);
@@ -76,22 +85,22 @@ public class VueStagiaireAjouterAdmin extends Scene {
 		Label labelAnneePromo = new Label("Année Promo :");
 		labelAnneePromo.setFont(Font.font("Roboto", FontPosture.ITALIC, 12));
 		
-		TextField textFieldNom = new TextField("");
+		textFieldNom = new TextField("");
 		textFieldNom.setPromptText("Exemple : MARTIN");
-		
-		TextField textFieldPrenom = new TextField("");
+
+		textFieldPrenom = new TextField("");
 		textFieldPrenom.setPromptText("Exemple : Jacques");
-		
-		TextField textFieldDepartement = new TextField("");
+
+		textFieldDepartement = new TextField("");
 		textFieldDepartement.setPromptText("Exemple : 01");
-		
-		TextField textFieldPromo= new TextField("");
+
+		textFieldPromo = new TextField("");
 		textFieldPromo.setPromptText("Exemple : CDA 22");
-		
-		TextField textFieldAnneePromo = new TextField("");
+
+		textFieldAnneePromo = new TextField("");
 		textFieldAnneePromo.setPromptText("Exemple : 2022");
 		
-		Button btnValider = new Button("Ajouter");
+		btnValider = new Button("Ajouter");
 		
 		HBox hboxTitre = new HBox();
 		hboxTitre.setAlignment(Pos.CENTER);
@@ -128,6 +137,7 @@ public class VueStagiaireAjouterAdmin extends Scene {
 		
 		
 }
+	//Getters & Setters
 
 	public MenuItem getItem1() {
 		return item1;
@@ -160,5 +170,65 @@ public class VueStagiaireAjouterAdmin extends Scene {
 	public void setItem5(MenuItem item5) {
 		this.item5 = item5;
 	}
+
+	public Button getBtnValider() {
+		return btnValider;
+	}
+
+	public void setBtnValider(Button btnValider) {
+		this.btnValider = btnValider;
+	}
+
+	public TextField getTextFieldNom() {
+		return textFieldNom;
+	}
+
+	public void setTextFieldNom(TextField textFieldNom) {
+		this.textFieldNom = textFieldNom;
+	}
+
+	public TextField getTextFieldPrenom() {
+		return textFieldPrenom;
+	}
+
+	public void setTextFieldPrenom(TextField textFieldPrenom) {
+		this.textFieldPrenom = textFieldPrenom;
+	}
+
+	public TextField getTextFieldDepartement() {
+		return textFieldDepartement;
+	}
+
+	public void setTextFieldDepartement(TextField textFieldDepartement) {
+		this.textFieldDepartement = textFieldDepartement;
+	}
+
+	public TextField getTextFieldPromo() {
+		return textFieldPromo;
+	}
+
+	public void setTextFieldPromo(TextField textFieldPromo) {
+		this.textFieldPromo = textFieldPromo;
+	}
+
+	public TextField getTextFieldAnneePromo() {
+		return textFieldAnneePromo;
+	}
+
+	public void setTextFieldAnneePromo(TextField textFieldAnneePromo) {
+		this.textFieldAnneePromo = textFieldAnneePromo;
+	}
+
+	@Override
+	public void eraseActionsdAfterUsage() {
+		textFieldNom.clear();
+		textFieldPrenom.clear();
+		textFieldDepartement.clear();
+		textFieldPromo.clear();
+		textFieldAnneePromo.clear();
+	}
+	
+	
+	
 	
 }

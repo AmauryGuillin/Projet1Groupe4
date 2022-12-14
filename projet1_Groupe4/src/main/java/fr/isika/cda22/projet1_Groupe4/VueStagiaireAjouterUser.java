@@ -1,8 +1,5 @@
 package fr.isika.cda22.projet1_Groupe4;
 
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,17 +9,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.stage.Stage;
-import javafx.geometry.Orientation;    
-import javafx.scene.control.ScrollBar;  
 
-public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
+public class VueStagiaireAjouterUser extends Scene implements EffacerActions, Constantes{
 	
 	//Attributs
 	private MenuItem item1;
@@ -31,6 +23,7 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 	private MenuItem item4;
 	private MenuItem item5;
 	private Button btnValider;
+	
 	private TextField textFieldNom;
 	private TextField textFieldPrenom;
 	private TextField textFieldDepartement;
@@ -38,15 +31,11 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 	private TextField textFieldAnneePromo;
 	
 	//Constructeur
-	public VueStagiaireModifierAdmin() {
+	public VueStagiaireAjouterUser() {
 		super(new VBox(), 1280, 720);
 		VBox grille = (VBox)this.getRoot();
-		
-//		VueStagiaireAjouterAdmin vueStagiaireAjouterAdmin = new VueStagiaireAjouterAdmin();
-//		VueConnexion vueConnexion = new VueConnexion();
-//		Recherche2 recherche2 = new Recherche2();
-		
-		
+//		grille.setAlignment(Pos.CENTER);
+	
 		// BackGround image, hébergée sur un serveur distant
 		grille.setStyle("-fx-background-image: url('https://i.goopics.net/whix8k.jpg');"
 				+ "-fx-background-repeat: stretch;" + "-fx-background-size: 1280 720;" +
@@ -55,7 +44,7 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		
 		//Construction du menu
         Menu menu = new Menu("Menu");
-	
+
 		 item1 = new MenuItem("Accueil");
 //		 item2 = new MenuItem("Recherche Avancée");
 //		 item3 = new MenuItem("Ajouter un stagiaire");
@@ -73,11 +62,9 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		
 		mb.getMenus().add(menu);
 		
-	
-		
 
 		
-		Label labelTitre = new Label("Interface de modification des Stagiaires");
+		Label labelTitre = new Label("Interface d'ajout de Stagiaires");
 		labelTitre.setFont(Font.font("Roboto", 20));
 		
 		Label labelNom = new Label("Nom :");
@@ -110,7 +97,7 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		textFieldAnneePromo = new TextField("");
 		textFieldAnneePromo.setPromptText("Exemple : 2022");
 		
-		btnValider = new Button("Valider");
+		btnValider = new Button("Ajouter");
 		
 		HBox hboxTitre = new HBox();
 		hboxTitre.setAlignment(Pos.CENTER);
@@ -125,8 +112,8 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		hboxPromo.setAlignment(Pos.CENTER);
 		HBox hboxAnneePromo = new HBox(25);
 		hboxAnneePromo.setAlignment(Pos.CENTER);
-		HBox hboxBtnValider = new HBox();
-		hboxBtnValider.setAlignment(Pos.CENTER);
+		HBox hboxBtnModifier = new HBox();
+		hboxBtnModifier.setAlignment(Pos.CENTER);
 		
 		hboxTitre.getChildren().addAll(labelTitre);
 		hboxNom.setPadding(new Insets(10, 10, 10, 60));
@@ -140,15 +127,13 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		hboxPromo.setPadding(new Insets(10, 10, 10, 60));
 		hboxAnneePromo.getChildren().addAll(labelAnneePromo, textFieldAnneePromo);
 		hboxAnneePromo.setPadding(new Insets(10, 10, 10, 60));
-		hboxBtnValider.getChildren().add(btnValider);
-		hboxBtnValider.setPadding(new Insets(10, 10, 10, 60));
+		hboxBtnModifier.getChildren().add(btnValider);
+		hboxBtnModifier.setPadding(new Insets(10, 10, 10, 60));
 		
-		grille.getChildren().addAll(mb, hboxTitre, hboxNom, hboxPrenom, hboxDepartement, hboxPromo, hboxAnneePromo, hboxBtnValider);
-	
-	}
-
-	
-	
+		grille.getChildren().addAll(mb, hboxTitre, hboxNom, hboxPrenom, hboxDepartement, hboxPromo, hboxAnneePromo, hboxBtnModifier);
+		
+		
+}
 
 	public MenuItem getItem1() {
 		return item1;
@@ -230,9 +215,6 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		this.textFieldAnneePromo = textFieldAnneePromo;
 	}
 
-
-
-
 	@Override
 	public void eraseActionsdAfterUsage() {
 		textFieldNom.clear();
@@ -241,5 +223,5 @@ public class VueStagiaireModifierAdmin extends Scene implements EffacerActions{
 		textFieldPromo.clear();
 		textFieldAnneePromo.clear();
 	}
-	
+
 }

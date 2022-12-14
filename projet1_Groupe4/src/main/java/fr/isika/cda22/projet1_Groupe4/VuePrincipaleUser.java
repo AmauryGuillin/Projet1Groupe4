@@ -1,5 +1,9 @@
 package fr.isika.cda22.projet1_Groupe4;
 
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,41 +30,47 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class VuePrincipaleUser extends Scene {
+public class VuePrincipaleUser extends Scene implements Constantes {
 		
-	
+	//Attributs
 	private Button btnAjouter;
 	private MenuItem itemImprimer;
 	private MenuItem itemDeconnexion;
-	
+	private MenuItem item1;
+//	private MenuItem item2;
+	private MenuItem item3;
+	private MenuItem item4;
+	private MenuItem item5;
+	TableView<Stagiaire> table;
 
-	public Button getBtnAjouter() {
-		return btnAjouter;
-	}
+	// Constructeur
+	public VuePrincipaleUser() {
+		super(new VBox(), 1280, 720);
+		VBox grille = (VBox) this.getRoot();
 
+//		grille.setPadding(new Insets(10, 10, 10, 10));
 
-	public MenuItem getItemImprimer() {
-		return itemImprimer;
-	}
+		// BackGround image, hébergée sur un serveur distant
+		grille.setStyle("-fx-background-image: url('https://i.goopics.net/yvsuuk.jpg');" + "-fx-background-repeat: stretch;"
+						+ "-fx-background-size: 1280 720;" + "-fx-background-position: center center;");
 
-	public MenuItem getItemDeconnexion() {
-		return itemDeconnexion;
-	}
-
-		public VuePrincipaleUser() {
-			
-		super(new HBox(), 1280, 720);
-		HBox grille = (HBox) this.getRoot();
-		
-		grille.setPadding(new Insets(10, 10, 10, 10));
-		
 		//On crée un menu déroulant pour imprimer et se deconnecter
 		Menu menu = new Menu("Menu");
 		itemImprimer = new MenuItem("Imprimer");
-		itemDeconnexion = new MenuItem("Déconnexion");
+//		itemDeconnexion = new MenuItem("Déconnexion");
+//		item1 = new MenuItem("Accueil");
+//		item2 = new MenuItem("Recherche Avancée");
+//		item3 = new MenuItem("Ajouter un stagiaire");
+//		item4 = new MenuItem("Modifier un stagiaire");
+		item5 = new MenuItem("Deconnexion");
 		
 		menu.getItems().add(itemImprimer);
-		menu.getItems().add(itemDeconnexion);
+//		menu.getItems().add(itemDeconnexion);
+//		menu.getItems().add(item1);
+//		menu.getItems().add(item2);
+//		menu.getItems().add(item3);
+//		menu.getItems().add(item4);
+		menu.getItems().add(item5);
 		
 		MenuBar mb = new MenuBar();
 		
@@ -78,7 +88,7 @@ public class VuePrincipaleUser extends Scene {
         
         
         //Création de la table
-		TableView<Stagiaire> table = new TableView<Stagiaire>();	
+		table = new TableView<Stagiaire>();	
 		table.setEditable(true);
 		HBox hboxTable = new HBox();
 		hboxTable.getChildren().add(table);
@@ -90,7 +100,7 @@ public class VuePrincipaleUser extends Scene {
         
         
         TableColumn<Stagiaire, String> nomCol = new TableColumn<Stagiaire, String>("Nom");
-        nomCol.setMinWidth(100);
+        nomCol.setMinWidth(200);
         nomCol.setStyle( "-fx-alignment: CENTER;");
         //spécifier une préférence de tri pour cette colonne
         //nomCol.setSortType(TableColumn.SortType.ASCENDING);
@@ -104,7 +114,7 @@ public class VuePrincipaleUser extends Scene {
         
         TableColumn<Stagiaire, String> prenomCol = 
         		new TableColumn<Stagiaire, String>("Prénom");
-        prenomCol.setMinWidth(100);
+        prenomCol.setMinWidth(200);
         prenomCol.setStyle( "-fx-alignment: CENTER;");
         //Spécifier comment remplir la donnée pour chaque cellule de cette colonne
         //Ceci se fait en specifiant un "cell value factory" pour cette colonne.
@@ -114,7 +124,7 @@ public class VuePrincipaleUser extends Scene {
       
         
         TableColumn<Stagiaire, String> departementCol = new TableColumn<Stagiaire, String>("Département");
-        departementCol.setMinWidth(100);
+        departementCol.setMinWidth(200);
         departementCol.setStyle( "-fx-alignment: CENTER;");
         //Spécifier comment remplir la donnée pour chaque cellule de cette colonne
         //Ceci se fait en specifiant un "cell value factory" pour cette colonne.
@@ -123,7 +133,7 @@ public class VuePrincipaleUser extends Scene {
         
         
         TableColumn<Stagiaire, String> promoCol = new TableColumn<Stagiaire, String>("Promo");
-        promoCol.setMinWidth(100);
+        promoCol.setMinWidth(200);
         promoCol.setStyle( "-fx-alignment: CENTER;");
         //Spécifier comment remplir la donnée pour chaque cellule de cette colonne
         //Ceci se fait en specifiant un "cell value factory" pour cette colonne.
@@ -132,7 +142,7 @@ public class VuePrincipaleUser extends Scene {
         
         
         TableColumn<Stagiaire, String> anneePromoCol = new TableColumn<Stagiaire, String>("Année Promo");
-        anneePromoCol.setMinWidth(100);
+        anneePromoCol.setMinWidth(200);
         anneePromoCol.setStyle( "-fx-alignment: CENTER;");
         //Spécifier comment remplir la donnée pour chaque cellule de cette colonne
         //Ceci se fait en specifiant un "cell value factory" pour cette colonne.
@@ -150,20 +160,17 @@ public class VuePrincipaleUser extends Scene {
         //On crée un choicebox de recherche multi critère et un textField de recherche avec et on les range dans une HBox
         
         TextField textFieldRecherche = new TextField();
-        ChoiceBox<String> choiceBoxRecherche = new ChoiceBox();
-        choiceBoxRecherche.getItems().addAll("Nom", "Prénom", "Département", "Promo", "Année Promo");
-        choiceBoxRecherche.setValue("Nom");
-        BorderPane.setMargin(choiceBoxRecherche, new Insets(2,2,2,2));
-        BorderPane.setMargin(textFieldRecherche, new Insets(2,2,2,2));
+        textFieldRecherche.setMinWidth(300);
           
         HBox hboxRecherche = new HBox(20);
         hboxRecherche.getChildren().addAll(textFieldRecherche);
         hboxRecherche.setAlignment(Pos.CENTER);
+        hboxRecherche.setMinWidth(800);
         
         textFieldRecherche.setPromptText("Cherchez ici!");
         
       //On intancie un objet FilteredList de notre observableList de stagiaire
-        FilteredList<Stagiaire> flStagiaires = new FilteredList(getStagiairesList(), p -> true);//Pass the data to a filtered list
+        FilteredList<Stagiaire> flStagiaires = new FilteredList<Stagiaire>(getStagiairesList(), p -> true);//Pass the data to a filtered list
         table.setItems(flStagiaires);//Set the table's items using the filtered list
         
         //On modifie notre FilterdList afin qu'il filtre le tableau en fonction des informations entrées dans notre textFieldRecherche; 
@@ -185,32 +192,111 @@ public class VuePrincipaleUser extends Scene {
         
         //On crée 2 VBox la prmiere vbox1 contiendra les Hbox(le label, la HBox recherche, le HBox du tableau et le HBox du bouton Ajouter) la vbox2 contiendra la barre de menu 
         VBox vbox1 = new VBox(30);
-        VBox vbox2 = new VBox();
+//        VBox vbox2 = new VBox();
         
-        vbox1.getChildren().addAll(hboxLabel, hboxRecherche, hboxTable, hboxBtn);
+        vbox1.getChildren().addAll(mb, hboxLabel, hboxRecherche, hboxTable, hboxBtn);
         vbox1.setAlignment(Pos.CENTER);
-        vbox2.getChildren().addAll(mb);
-        vbox2.setAlignment(Pos.TOP_LEFT);
-        vbox2.setPadding(new Insets(2,150,2,2));
+        
+        
+//        vbox2.getChildren().addAll(mb);
+//        vbox2.setAlignment(Pos.TOP_LEFT);
+//        vbox2.setPadding(new Insets(2,150,2,2));
         
         //A la grille on affecte les 2 VBox
-        grille.getChildren().addAll(vbox2, vbox1);
-        grille.setAlignment(Pos.CENTER_LEFT);
+        grille.getChildren().addAll(vbox1);
+        grille.setAlignment(Pos.TOP_CENTER);
 		
 
 	}
 
-	private ObservableList<Stagiaire> getStagiairesList() {
+	//Methode qui permet de lier le fichier binaire à l'affichage de la TableVieuw
+	public ObservableList<Stagiaire> getStagiairesList() {
+		RandomAccessFile raf;
+		Noeud noeud = new Noeud();
+		ObservableList<Stagiaire> list = null;
+		ArrayList<Stagiaire> tableau = new ArrayList<>();
 
-		Stagiaire stagiaire1 = new Stagiaire("Bleriot", "Louis", "94", "CDA22", "2022");
-		Stagiaire stagiaire2 = new Stagiaire("Jeandes", "Bernard", "85", "CDA41", "2012");
-		Stagiaire stagiaire3 = new Stagiaire("Goodesa", "Marie", "85", "CDA98", "2006");
-		ObservableList<Stagiaire> list = FXCollections.observableArrayList(stagiaire1, stagiaire2, stagiaire3);
+		try {
+			raf = new RandomAccessFile(CHEMIN_BIN, "rw");
+			tableau = noeud.toArray(raf);
+
+			list = FXCollections.observableArrayList(tableau);
+		
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return list;
 	}
 
 
+	//Getters & Setters
+	public MenuItem getItem1() {
+		return item1;
+	}
 
+	public void setItem1(MenuItem item1) {
+		this.item1 = item1;
+	}
+
+	public MenuItem getItem3() {
+		return item3;
+	}
+
+	public void setItem3(MenuItem item3) {
+		this.item3 = item3;
+	}
+
+	public MenuItem getItem4() {
+		return item4;
+	}
+
+	public void setItem4(MenuItem item4) {
+		this.item4 = item4;
+	}
+
+	public MenuItem getItem5() {
+		return item5;
+	}
+
+	public void setItem5(MenuItem item5) {
+		this.item5 = item5;
+	}
+
+	public void setBtnAjouter(Button btnAjouter) {
+		this.btnAjouter = btnAjouter;
+	}
+
+	public TableView<Stagiaire> getTable() {
+		return table;
+	}
+
+	public void setTable(TableView<Stagiaire> table) {
+		this.table = table;
+	}
+
+	public void setItemImprimer(MenuItem itemImprimer) {
+		this.itemImprimer = itemImprimer;
+	}
+
+	public void setItemDeconnexion(MenuItem itemDeconnexion) {
+		this.itemDeconnexion = itemDeconnexion;
+	}
+
+	public Button getBtnAjouter() {
+		return btnAjouter;
+	}
+
+
+	public MenuItem getItemImprimer() {
+		return itemImprimer;
+	}
+
+	public MenuItem getItemDeconnexion() {
+		return itemDeconnexion;
+	}
 
 }
 

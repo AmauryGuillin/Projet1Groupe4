@@ -14,6 +14,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -22,27 +23,29 @@ import javafx.stage.Window;
 
 public class VueConnexion extends Scene implements EffacerActions {
 	
+	//Attributs
 	private Button btn_connexion;
 	private Button btn_inscription;
 	private TextField username;
 	private PasswordField password;
 
-	
-// ---------------------------------------LES ESSENTIELS---------------------------------------
+	//Constructeur
 	public VueConnexion() {
 		super(new GridPane(), 1280, 720);
-		
 		GridPane root = (GridPane) this.getRoot();// organise les composants de la fenetre
 		
-// ---------------------------------------LES ESSENTIELS---------------------------------------
-		
-		
+		//Details de la scène
 		root.setPadding(new Insets(20));
-		root.setHgap(25);// espace entre label et champs remplissage (horizontal)
+		root.setHgap(0);// espace entre label et champs remplissage (horizontal)
 		root.setVgap(15);// espace entre chaque label(vertical)
 		root.setAlignment(Pos.CENTER);
-
 		this.setRoot(root);
+			
+		//BackGround image, hébergée sur un serveur distant
+		root.setStyle("-fx-background-image: url('https://i.goopics.net/56y7vq.jpg');"
+				+ "-fx-background-repeat: stretch;" + "-fx-background-size: 1280 720;" +
+		        "-fx-background-position: center center;" );
+		
 
 		Label label = new Label("Connexion");
 		label.setFont(new Font("Arial Black", 20));
@@ -60,7 +63,7 @@ public class VueConnexion extends Scene implements EffacerActions {
 		hb.getChildren().add(label);
 
 		root.add(hb, 1, 0);
-		hb.setAlignment(Pos.TOP_CENTER);
+		hb.setAlignment(Pos.CENTER);
 
 		root.add(username, 1, 1);
 
@@ -69,7 +72,6 @@ public class VueConnexion extends Scene implements EffacerActions {
 
 		root.add(createButtunsValSuppr(), 1, 7);
 
-		
 	}
 	
 	// Methodes spécifiques

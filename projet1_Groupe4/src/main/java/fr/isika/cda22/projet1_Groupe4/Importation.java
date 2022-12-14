@@ -55,17 +55,6 @@ public class Importation implements Constantes {
 				compteur++;
 			}
 			
-			
-			//Methode ajouter
-			
-//			Stagiaire stagiaire = new Stagiaire("ZZZZ", "ZZZZZ", "91", "CDA 22", "2015"); 
-//			
-//			Noeud noeudTest = new Noeud(stagiaire, -1, -1, -1);  //Methode ajouter
-//			noeudTest.ajouterStagiaireBinaire(noeudTest, raf);  //Methode ajouter
-//			tableau = noeudTest.toArray(raf);
-			
-			
-
 			// Fermeture des flux
 			br.close();
 			fr.close();
@@ -75,10 +64,6 @@ public class Importation implements Constantes {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
 
 	// Cette methode permet de formater le nom en MAJUSCULE et d'enlever de
 	// potentiels espaces en fin de ligne
@@ -92,23 +77,7 @@ public class Importation implements Constantes {
 		nom_conforme = nom_conforme.strip();
 	
 		return nom_conforme;
-
 	}
-	
-	public String randomString(String nom) {
-		String nom_random = nom;
-		nom_random = "";
-		Random random = new Random();
-		char c;
-		for (int i = 0; i < 20; i++) {
-			c = (char)(random.nextInt(26) + 97);
-			nom_random += c;
-		}
-		
-		return nom_random;
-		
-	}
-	
 
 	// Cette methode permet de formater le nom avec seulement la première lettre en
 	// MAJUSCULE et d'enlever de potentiels espaces en fin de ligne
@@ -131,7 +100,6 @@ public class Importation implements Constantes {
 		}
 		departement_conforme = departement_conforme.strip();
 		return departement_conforme;
-
 	}
 
 	// Cette methode permet de tout mettre en MAJUSCULES et d'enlever de potentiels

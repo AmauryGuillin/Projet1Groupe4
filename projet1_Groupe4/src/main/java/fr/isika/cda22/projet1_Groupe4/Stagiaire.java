@@ -20,8 +20,8 @@ public class Stagiaire implements Constantes {
 		this.dateFormation = dateFormation;
 	}
 	
+	//Constructeur vide
 	public Stagiaire() {
-		
 	}
 
 
@@ -102,8 +102,9 @@ public class Stagiaire implements Constantes {
 		return dateFormationLong;
 	}
 	
+	//Methode utile à la recherche multicritère du front, permet d'aller rechercehr dans chaque attribut composant un stagiaire
 	public String getAll() {
-		return nom+" "+prenom+" "+departement+" "+nomPromo+" "+dateFormation;
+		return nom.trim()+" "+prenom.trim()+" "+departement.trim()+" "+nomPromo.trim()+" "+dateFormation.trim();
 	}
 	
 	// Getters & Setters

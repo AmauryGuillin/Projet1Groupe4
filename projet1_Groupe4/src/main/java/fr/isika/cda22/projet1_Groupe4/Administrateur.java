@@ -12,13 +12,8 @@ public class Administrateur extends Personne {
 		this.nom_de_compte = nom_de_compte;
 		this.mot_de_passe = mot_de_passe;
 	}
-	
-	
-	
-	//Methodes spécifiques
-	
-	
-	
+
+	// Methodes spécifiques
 
 	// Getters & Setters
 	public String getNom_de_compte() {

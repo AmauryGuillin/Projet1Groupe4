@@ -96,6 +96,7 @@ public class LectureFichier implements Constantes {
 		}
 	}
 
+	//Methode qui permet d'aller lire le fichier .txt contenant les ID Administrateur
 	public void lireBDDAdmins(String cheminBDDAdmins) {
 
 		listeAdmins = new ArrayList<>();
@@ -125,6 +126,7 @@ public class LectureFichier implements Constantes {
 
 	}
 
+	//Methode qui permet d'aller lire le fichier .txt contenant les ID Utilisateurs
 	public void lireBDDUsers(String cheminBDDUsers) {
 
 		listeUsers = new ArrayList<>();
@@ -154,9 +156,6 @@ public class LectureFichier implements Constantes {
 
 	}
 
-	public void ecrireBDDUsers(String cheminBDDUsers) {
-
-	}
 
 	public ArrayList<Administrateur> getListeAdmins() {
 		return listeAdmins;

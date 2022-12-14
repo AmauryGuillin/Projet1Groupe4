@@ -25,8 +25,8 @@ public class Noeud implements Constantes {
 		this.indexdoublon = indexDoublon;
 	}
 	
-	public Noeud() {
-		
+	// Constructeur vide
+	public Noeud() {	
 	}
 	
 	public Noeud(Stagiaire cle) {
@@ -71,6 +71,9 @@ public class Noeud implements Constantes {
 
 	}
 
+	/*
+	 * Methode qui permet de retourner une ArrayList contenant un noeud spécifique suite à une recherche multicritère
+	 */
 	public ArrayList<Noeud> rechercherUnStagiaire(String nom, String prenom, String departement, String nomPromo, String dateFormation, RandomAccessFile raf) {
 		
 		ArrayList<Noeud> tableauRecherche = new ArrayList<>();
@@ -212,7 +215,18 @@ public class Noeud implements Constantes {
 		tableau.add(recupererStagiaireIndex(indexParcours, raf));
 	}
 	
-	//Methode qui permet de rechercher un stagiaire précis dans le fichier binaire
+	/*
+	 * Methode qui permet de rechercher un stagiaire précis dans le fichier binaire
+	 * 
+	 * On vérifie qu'il y ait au moins 1 critère de recherche utilisé
+	 * Si oui,
+	 * On parcours l'arbre binaire de façon "infixe" (Gauche, Noeud, Doublon, Droite)
+	 * En fonction du nombre de critère de recherche utilisé en argument, la methode une ArrayList
+	 * contenant plus ou moins de noeud.
+	 * Si la recherche est utilisé à son plein potentiel, alors un seul noeud doit être contenu
+	 * dans la liste en fin d'execution.
+	 * 
+	 */
 	public void toArrayRechercheStagiaire(String nom, String prenom, String departement, String nomPromo, String dateFormation, 
 			int indexP, int indexEC, RandomAccessFile raf, ArrayList<Noeud> tableauRecherche) {
 
@@ -289,7 +303,15 @@ public class Noeud implements Constantes {
 		}	
 	}
 	
-	
+	/*
+	 * Methode qui permet de supprimer un stagiaire en fonction de son index
+	 * 
+	 * On recupère le noeud à supprimer puis on regarde quel est la disposition
+	 * de ses fils droit/gauche, s'il en a.
+	 * En fonction de cette observation, on va rentrer dans une des méthode spécifique
+	 * pour chaque cas.
+	 * 
+	 */
 	public void supprimerStagiaireNoeud(int indexStagiaireSupp) {
 		try {
 
@@ -333,7 +355,15 @@ public class Noeud implements Constantes {
 		}
 
 	}
-	
+	/*
+	 * Methode qui permet de supprimer la racine de l'arbre
+	 * (ou la racine d'un sous arbre)
+	 * 
+	 * On recupère le noeud successeur
+	 * On écrit à la place du noeud à supprimer le stagiaire successeur
+	 * On met à jour les index fils gauche/droit du nouveau noeud racine
+	 * On supprime le noeud remplaçant de sa position initiale
+	 */
 	private void supprimerStagiaireRacine (Noeud noeudSupp,RandomAccessFile raf) {
 		int indexSansFils = -1;
 		int indexNoeudRemplacant = 0;
@@ -368,6 +398,7 @@ public class Noeud implements Constantes {
 		
 	}
 	
+	//Methode qui permet d'écrire un stagiaire dans le fichier binaire
 	private void ecrireNoeudStagiaire(Stagiaire stgRecup, RandomAccessFile raf, int indexNoeudSupp) {
 
 		try {
@@ -387,6 +418,7 @@ public class Noeud implements Constantes {
 		
 	}
 	
+	//Methode qui permet de lire un Noeud dans le fichier binaire
 	private Stagiaire lireNoeudStagiaire(int indexNoeudRemplacant, RandomAccessFile raf) {
 
 		Stagiaire stgRecup = new Stagiaire();
@@ -433,6 +465,7 @@ public class Noeud implements Constantes {
 			return stgRecup ;
 		}
 	
+	//Methode qui permet de récupérer le noeud à supprimer
 	private Noeud recupererNoeudSupp(int indexStagiaireSupp, RandomAccessFile raf) {
 
 		Noeud noeudSupp = new Noeud();
@@ -499,7 +532,7 @@ public class Noeud implements Constantes {
 		return noeudSupp;
 	}
 	
-	
+	// Methode qui permet de modifier un noeud Parent qui ne contient aucun fils droit/gauche
 	private void modifierNoeudParentSansFils(Noeud noeudSupp, RandomAccessFile raf) {
 		int indexNoeudSansFils = -1;
 
@@ -576,7 +609,7 @@ public class Noeud implements Constantes {
 
 	}
 	
-	// Méthode pour Noeud supprimé qui a un fils gauche
+	// Méthode pour supprimer un Noeud qui a un fils gauche
 	private void modifierNoeudAvecFilsGauche(Noeud noeudSupp, RandomAccessFile raf) {
 		int indexNoeudSansFils = -1;
 
@@ -636,7 +669,7 @@ public class Noeud implements Constantes {
 
 	}
 	
-	// Méthode pour Noeud supprimé qui a un fils droit
+	// Méthode pour supprimer un Noeud qui a un fils droit
 	private void modifierNoeudAvecFilsDroit(Noeud noeudSupp, RandomAccessFile raf) {
 		int indexNoeudSansFils = -1;
 
@@ -695,6 +728,7 @@ public class Noeud implements Constantes {
 
 	}
 	
+	//Methode qui permet de récupérer l'index du noeud Parent
 	private int recupererIndexParent(int indexNoeudFils, RandomAccessFile raf, int indexNoeudParent) {
 		indexNoeud = 0;
 		int indexNoeudSansFils = -1;
@@ -709,6 +743,7 @@ public class Noeud implements Constantes {
 
 	}
 	
+	//Methode qui permet de chercher l'élément le plus petit d'un sous arbre
 	private int chercherFilsPlusPetit(Noeud noeudFils, RandomAccessFile raf, int indexNoeudNouveauFils) {
 		int indexNoeudSansFils = -1;
 		indexNoeud = 0;
@@ -733,6 +768,7 @@ public class Noeud implements Constantes {
 
 	}
 	
+	//Methode qui permet de chercher l'élément le plus grand d'un sous arbre
 	private int chercherFilsPlusGrand(Noeud noeudFils, RandomAccessFile raf, int indexNoeudNouveauFils) {
 		int indexNoeudSansFils = -1;
 		indexNoeud = 0;
@@ -757,6 +793,7 @@ public class Noeud implements Constantes {
 
 	}
 	
+	//Methode qui permet de récupérer un noeud dans le ficheir binaire
 	private Noeud recupererNoeud(Noeud noeudRecup, int indexNoeud, RandomAccessFile raf) {
 
 		try {
@@ -808,6 +845,7 @@ public class Noeud implements Constantes {
 		return noeudRecup;
 	}			
 
+	//Methode qui permet d'écrire l'index d'un noeud dans le fichier binaire
 	public void ecrireIndexNoeud(int indexParent, RandomAccessFile raf, int indexNoeud) {
 		try {
 			raf.seek((indexParent * TAILLE_NOEUD_OCTET));
@@ -825,6 +863,14 @@ public class Noeud implements Constantes {
 		ajouterStagiaireBinaire(noeud, compteur, raf);	
 	}
 	
+	/*
+	 * Methode qui permet de modifier un stagiaire dans le fichier binaire
+	 * On recherche le stagiaire à supprimer via la recherche multicritère
+	 * On demande quels sont les attributs à modifier
+	 * On recreer un stagiaire via les attributs récupérés au clavier (ou depuis la recherche multicritère s'ils sont inchangés)
+	 * On supprime le stagiaire issus de la recherche
+	 * On recreer un stagiaire avec les nouveaux attributs et un nouvel index (en fin de fichier binaire)
+	 */
 	public void modifierUnStagiaire(String nom, String prenom, String departement, String nomPromo, String dateFormation, RandomAccessFile raf) {
 		
 		try {
@@ -929,7 +975,8 @@ public class Noeud implements Constantes {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//Methode qui permet d'écrire un fils gauche
 	public void ecrireFilsGauche(int indexParent, RandomAccessFile raf, int indexNoeud) {
 		try {
 			raf.seek((indexParent * TAILLE_NOEUD_OCTET) + INDEX_FILS_GAUCHE_OCTET);
@@ -939,6 +986,7 @@ public class Noeud implements Constantes {
 		}
 	}
 
+	//Methode qui permet d'écrire un fils droit
 	public void ecrireFilsDroit(int indexParent, RandomAccessFile raf, int indexNoeud) {
 		try {
 			raf.seek((indexParent * TAILLE_NOEUD_OCTET) + INDEX_FILS_DROIT_OCTET);
@@ -985,6 +1033,7 @@ public class Noeud implements Constantes {
 		return indexParent;
 	}
 	
+	//Methode qui permet de récupérer l'index d'un Noeud
 	public int recupererIndexNoeud(int indexNoeud, RandomAccessFile raf) {
 		int indexParent = 0;
 		try {
@@ -1154,6 +1203,20 @@ public class Noeud implements Constantes {
 			e.printStackTrace();
 		}
 
+	}
+	
+	//Methode qui retourne la taille actuelle de notre fichier binaire
+	public int tailleFichierBinaire(RandomAccessFile raf) {
+		int taille = 0;
+		
+		try {
+			taille = (int) raf.length()/TAILLE_NOEUD_OCTET;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return taille;
 	}
 
 	// Getters & Setters

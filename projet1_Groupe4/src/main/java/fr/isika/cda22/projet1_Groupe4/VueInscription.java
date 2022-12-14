@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -18,20 +20,30 @@ import javafx.scene.text.Font;
 
 public class VueInscription extends Scene implements EffacerActions {
 
+	//Attributs
 	private Button btn_inscrire;
+	private Button btn_retour;
 	private TextField nom;
 	private TextField prenom;
 	private TextField username;
 	private PasswordField password;
 
+	//Constructeur
 	public VueInscription() {
 		super(new GridPane(), 1280, 720);
-
 		GridPane root = (GridPane) this.getRoot();// organise les composants de la fenetre
+		
+		//Details de la scène
 		root.setPadding(new Insets(20)); //
 		root.setHgap(25);// espace entre label et champs remplissage (horizontal)
 		root.setVgap(15);// espace entre chaque label(vertical)
 		root.setAlignment(Pos.CENTER);
+		
+		//BackGround image, hébergée sur un serveur distant
+		root.setStyle("-fx-background-image: url('https://i.goopics.net/9sc7nf.jpg');"
+				+ "-fx-background-repeat: stretch;" + "-fx-background-size: 1280 720;" +
+		        "-fx-background-position: center center;" );
+		
 
 		this.setRoot(root);
 
@@ -72,9 +84,11 @@ public class VueInscription extends Scene implements EffacerActions {
 	public HBox createButtunsValider() {
 		btn_inscrire = new Button("S'inscrire");
 		btn_inscrire.setMinSize(100, 35);
+		btn_retour = new Button("Retour");
+		btn_retour.setMinSize(100, 35);
 
 		HBox hb3 = new HBox();
-		hb3.getChildren().addAll(btn_inscrire);
+		hb3.getChildren().addAll(btn_inscrire, btn_retour);
 		hb3.setSpacing(50);
 		hb3.setAlignment(Pos.CENTER);
 
@@ -127,6 +141,15 @@ public class VueInscription extends Scene implements EffacerActions {
 	public void setPassword(PasswordField password) {
 		this.password = password;
 	}
+
+	public Button getBtn_retour() {
+		return btn_retour;
+	}
+
+	public void setBtn_retour(Button btn_retour) {
+		this.btn_retour = btn_retour;
+	}
+	
 	
 	
 
